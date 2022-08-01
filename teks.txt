@@ -1,0 +1,14 @@
+Aplikasi Inventory Perpustakaan :
+1. Setup Template + Setup Database
+2. Login + Logout
+3. Setup Halaman + Datatable
+4. Insert data (data barang, barang masuk, barang keluar)
+5. Menampilkan data ke table
+6. Update + Delete
+
+DB :
+- Login : iduser, email, password
+- Buku : idbuku, judulbuku, pengarang,
+penerbit, tahun, jenisbuku, jumlah
+- masuk : idmasuk, idbuku, tanggal, asal, keterangan
+-keluar :idkeluar, idbuku, tanggal, penerima, keterangan
