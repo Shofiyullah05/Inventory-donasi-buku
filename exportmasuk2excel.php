@@ -5,6 +5,7 @@ header("Content-Disposition: attachment; filename=laporan-masuk.xls");
 require 'function.php';
 require 'cek.php';
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,26 +60,44 @@ require 'cek.php';
                                         </thead>
                                         <tbody>
 
-                                            <?php 
-                                                $query = mysqli_query($conn, "select * from buku, masuk where buku.judulbuku=masuk.judulbuku");
-                                                $i =1;
-                                                while ($data = mysqli_fetch_array($query)) {
+                                            <?php
+                                                 
+                                                
+                                                $query_masuk = mysqli_query($conn, "select * from buku, masuk where buku.idbuku=masuk.idbuku order by TanggalMasuk DESC");
+                                                $i=1;
+                                                while ($data = mysqli_fetch_array($query_masuk)) {
+                                                    $idbuku = $data['idbuku'];
+                                                    $TanggalMasuk = $data['TanggalMasuk'];
+                                                    $pengarang = $data['pengarang'];
+                                                    $judulbuku = $data ['judulbuku'];
+                                                    $penerbit = $data ['penerbit'];
+                                                    $tahun  = $data['tahun'];
+                                                    $cet = $data['cet'];
+                                                    $jenisbuku = $data['jenisbuku'];
+                                                    $asal = $data['asal'];
+                                                    $jumlah = $data['jumlahfull'];
+                                                    $keterangan = $data ['keterangan'];
+                                                    if ($jumlah>0) {
+                                                    
                                                     
                                                     ?>
+                                                    
                                                     <tr>
                                                     <td><?= $i++; ?></td>
-                                                    <td><?= $data ['TanggalMasuk']; ?></td>
-                                                    <td><?= $data ['pengarang']; ?></td>
-                                                    <td><?= $data ['judulbuku']; ?></td>
-                                                    <td><?= $data ['penerbit']; ?></td>
-                                                    <td><?= $data ['tahun']; ?></td>
-                                                    <td><?= $data ['cet']; ?></td>
-                                                    <td><?= $data ['jenisbuku']; ?></td>
-                                                    <td><?= $data ['asal']; ?></td>
-                                                    <td><?= $data ['jumlahfull']; ?></td>
-                                                    <td><?= $data ['keterangan']; ?></td>
-                                                    </tr>
+                                                    <td><?= $TanggalMasuk; ?></td>
+                                                    <td><?= $pengarang; ?></td>
+                                                    <td><?= $judulbuku; ?></td>
+                                                    <td><?= $penerbit; ?></td>
+                                                    <td><?= $tahun; ?></td>
+                                                    <td><?= $cet; ?></td>
+                                                    <td><?= $jenisbuku; ?></td>
+                                                    <td><?= $asal; ?></td>
+                                                    <td><?= $jumlah; ?></td>
+                                                    <td><?= $keterangan; ?></td>
+                                                    <td>
+                                                    
                                                     <?php
+                                                    }
                                                 }
                                             ?>
                                         </tbody>

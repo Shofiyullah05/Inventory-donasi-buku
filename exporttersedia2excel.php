@@ -60,9 +60,10 @@ require 'cek.php';
                                         <tbody>
 
                                             <?php 
-                                                $query = mysqli_query($conn, "select * from buku, masuk where buku.judulbuku=masuk.judulbuku");
+                                                $query = mysqli_query($conn, "select * from buku, masuk where buku.judulbuku=masuk.judulbuku order by TanggalMasuk DESC");
                                                 $i=1;
                                                 while ($data = mysqli_fetch_array($query)) {
+                                                    if ($data['updatejumlah']>0) {
                                                     
                                                     ?>
                                                     <tr>
@@ -80,6 +81,7 @@ require 'cek.php';
                                         
                                                 </tr>
                                                     <?php
+                                                    }
                                                 }
                                             ?>
                                         </tbody>    

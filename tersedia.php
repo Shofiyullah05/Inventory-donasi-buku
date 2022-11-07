@@ -20,7 +20,7 @@ require 'cek.php';
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.html">Perpusda Kudus</a>
+            <a class="navbar-brand" href="indexadmin.php">Perpusda Kudus</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             
         </nav>
@@ -29,7 +29,11 @@ require 'cek.php';
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="resumetotal.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Resume
+                            </a>
+                            <a class="nav-link" href="indexadmin.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Buku Masuk
                             </a>
@@ -41,8 +45,13 @@ require 'cek.php';
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Buku Keluar
                             </a>
-                            <a class="nav-link" href="logout.php" 
-                            onclick="return confirm('Anda yakin mau keluar ?')">Logout</a>
+                            <a class="nav-link" href="jumlahdonasi.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Donasi dari pengunjung
+                            </a>
+                            <a class="nav-link" href="logout.php" onclick="return confirm('want to LOGOUT?')" >
+                                Logout
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -53,16 +62,17 @@ require 'cek.php';
                         <h1 class="mt-4">Buku Tersedia</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                 <!-- Button to Open the Modal -->
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                    Donasi
-                                </button>
-                                <br>
-                                <br>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="window.open('exporttersedia2excel.php')">
-                                    Export Buku Tersedia (Excel)
-                                </button>
-                                <br>
+                                <div class="row">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    Donasikan Buku
+                                    </button>
+                                
+                                    <button type="button" class="btn btn-primary ml-5" onclick="return confirm('Apakah anda ingin EXPORT Data Buku Tersedia ke excel?'), window.open('exporttersedia2excel.php')">
+                                    Export Buku Tersedia To Excel
+                                    </button>
+
+                                </div>
+                                 
                                 <div class="row mt-4">
                                     <div class="col">
                                         <h4>Cari berdasarkan tanggal</h4>
@@ -70,10 +80,8 @@ require 'cek.php';
                                             <input type="date" name="tgl_mulai" class="form-control mr-2">
                                             sampai
                                             <input type="date" name="tgl_selesai" class="form-control ml-2">
-                                            <button type="submit" name="filter_tgl" class="btn btn-info ml-3">Filter</button>
-                                              
+                                            <button type="submit" name="filter_tgl" class="btn btn-info ml-3">Filter</button>    
                                         </form>
-                                        
                                     </div>
                                     
                                 </div>
@@ -102,26 +110,25 @@ require 'cek.php';
                                         <tbody>
 
                                            <?php
-                                            
                                             if (isset($_POST['filter_tgl'])) {
-                                                $mulai = mysqli_real_escape_string($conn,  $_POST['tgl_mulai']);
+                                                $mulai = mysqli_real_escape_string($conn, $_POST['tgl_mulai']) ;
                                                 $selesai = mysqli_real_escape_string($conn,  $_POST['tgl_selesai']);
                                                 
-                                                if ($mulai=null || $selesai!=null) {
+                                                if ($mulai!=null || $selesai!=null) {
                                                     $query = mysqli_query($conn, "select * from buku, masuk where buku.idbuku=masuk.idbuku and TanggalMasuk BETWEEN 
-                                                '$mulai' and DATE_ADD('$selesai', INTERVAL 1 DAY) order by idbuku DESC");
+                                                '$mulai' and DATE_ADD('$selesai', INTERVAL 1 DAY) order by TanggalMasuk DESC");
                                                 } else {
                                                     $query = mysqli_query($conn, "select * from buku, masuk where buku.idbuku=masuk.idbuku order by TanggalMasuk DESC");    
                                                 }
                                                 
                                             } else {
                                                 $query = mysqli_query($conn, "select * from buku, masuk where buku.idbuku=masuk.idbuku order by TanggalMasuk DESC");
-                                            }
-                                            
+                                            }                                            
                                             
                                             $i =1;
                                             while ($data = mysqli_fetch_array($query)) {
                                                 if ($data['updatejumlah']>0) {
+                                                
                                                 ?>
                                                 <tr>
                                                 <td><?= $i++; ?></td>
@@ -137,7 +144,6 @@ require 'cek.php';
                                                 <td><?= $data ['keterangan']; ?></td>
                                                 </td>
                                                 </tr>
-                                                
                                                 <?php
                                                 }
                                             }
@@ -173,9 +179,7 @@ require 'cek.php';
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
-    </body>
-    <!-- The Modal -->
-    <div class="modal fade" id="myModal">
+    </body>  <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
       
@@ -188,13 +192,13 @@ require 'cek.php';
         <!-- Modal body -->
         <form method="post">
                 <div class="modal-body">
-                
+                    <span class="label-text">Judul Buku</span>
                     <input type="text" name="judulkeluar" placeholder="Masukkan judul buku yang ingin di donasikan" class="form-control" required>
-                    <br>
+                    <span class="label-text">Penerima</span>
                     <input type="text" name="penerima" placeholder="Masukkan Penerima" class="form-control" required>
-                    <br>
+                    <span class="label-text">Jumlah Keluar</span>
                     <input type="number" name="jmlkeluar" placeholder="Jumlah Keluar" class="form-control" required>
-                    <br>
+                    <span class="label-text">Keterangan</span>
                     <input type="text" name="keterangan_terima" placeholder="KETERANGAN" class="form-control" required>
                     <br>
                     <button type="submit" class="btn btn-primary" name="barangkeluar">TAMBAH</button>

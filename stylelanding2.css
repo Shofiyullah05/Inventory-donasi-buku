@@ -1,0 +1,63 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url(GEDUNG3.jpg) no-repeat;
+  background-size: cover;
+}
+
+.box {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgb(195, 239, 250);
+  margin: auto auto;
+  padding: 40px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 280px;
+}
+
+a {
+  text-decoration: none;
+}
+.justify {
+  display: flex;
+  justify-content: space-around;
+}
+.btn {
+  padding: 0.7rem 2rem;
+  background: #3ef9ff;
+  color: #000000;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+nav,
+.btn:hover {
+  background: #000000;
+  color: #3ef9ff;
+}
+.header-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  position: relative;
+}
+.h1 {
+  color: white;
+}
+.social-media {
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+  align-items: center;
+}
+.social-media li a {
+  color: #000000;
+}
